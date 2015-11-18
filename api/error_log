@@ -1,0 +1,6 @@
+[07-Nov-2015 16:24:28 America/New_York] PHP Warning:  require(./dbconnect.php): failed to open stream: No such file or directory in /home/nerdiieq/public_html/invite/api/index.php on line 3
+[07-Nov-2015 16:24:28 America/New_York] PHP Warning:  require(./dbconnect.php): failed to open stream: No such file or directory in /home/nerdiieq/public_html/invite/api/index.php on line 3
+[07-Nov-2015 16:24:28 America/New_York] PHP Fatal error:  require(): Failed opening required './dbconnect.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/nerdiieq/public_html/invite/api/index.php on line 3
+[07-Nov-2015 16:32:12 America/New_York] PHP Parse error:  syntax error, unexpected 'foreach' (T_FOREACH), expecting ',' or ';' in /home/nerdiieq/public_html/invite/api/index.php on line 36
+[10-Nov-2015 14:48:59 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/nerdiieq/public_html/invite/api/index.php on line 75
+[10-Nov-2015 16:09:10 America/New_York] PHP Parse error:  syntax error, unexpected '{', expecting ')' in /home/nerdiieq/public_html/invite/api/index.php on line 78
