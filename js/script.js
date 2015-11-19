@@ -74,7 +74,7 @@ var showForm = function(guestInfo, elem){
 
 		//submit form with AJAX
 		$.ajax({
-			url: 'api/',
+			url: '../api/',
 			data: JSON.stringify(data),
 			dataType:'json',
 			contentType: 'charset=utf-8',
@@ -97,7 +97,7 @@ var refreshGuestData = function(){
 	var updatedStart = 0;
 
 	$.ajax({
-		url:"api/?start=" + updatedStart + "&max=" + updatedMax,
+		url:"../api/?start=" + updatedStart + "&max=" + updatedMax,
 		dataType:'json',
 		accepts: 'appication/json'
 	}).done(function(data, textStatus, jqXHR){
@@ -166,7 +166,7 @@ var showGuestListContent = function(){
 	var jQueryGuestListContainer = $('#guestlist');
 
 	jQuery.ajax({
-		url: 'api/?start=' + start + '&max=' + max,
+		url: '../api/?start=' + start + '&max=' + max,
 		dataType: 'json',
 		accepts: 'application/json'
 	}).done(function(data, textStatus, jqXHR){
@@ -214,7 +214,7 @@ var showGuestListContent = function(){
 		ev.preventDefault();
 
 		$.ajax({
-			url: 'api/?start=' + start + '&max=' + max,
+			url: '../api/?start=' + start + '&max=' + max,
 			dataType: 'json',
 			accepts: 'application/json'
 		}).done(function(data, textStatus, jqXHR){
