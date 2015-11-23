@@ -12,15 +12,14 @@ var showHtmlContent = function(url){
 
 var showForm = function(guestInfo, elem){
 	var html = "<form>";
-	html += "<span>I </span>";
+	html += "<span>Will you be attending?  ";
 	html += "<select name='isAccepted'>";
 	html += "<option value=''></option>";
 	html += "<option value='1'>Accept</option>";
 	html += "<option value='0'>Decline</option>";
-	html += "</select>";
-	html += "</span> the invitation. Our party will have </span>";
-	html += "<input type='text' name='numOfPeopleComing' value='' maxlength='2' size='3'/>";
-	html += "<span>people</span>";
+	html += "</select> </span> <br/>";
+	html += "<span> How many guests?  ";
+	html += "<input type='text' name='numOfPeopleComing' value='' maxlength='2' size='3'/></span><br/>";
 	html += "<input type='submit' class='submitForm' name='submitForm' value='RSVP' />";
 	html += "</form>";
 
@@ -74,7 +73,7 @@ var showForm = function(guestInfo, elem){
 
 		//submit form with AJAX
 		$.ajax({
-			url: '../api/',
+			url: 'api/',
 			data: JSON.stringify(data),
 			dataType:'json',
 			contentType: 'charset=utf-8',
@@ -97,12 +96,11 @@ var refreshGuestData = function(){
 	var updatedStart = 0;
 
 	$.ajax({
-		url:"../api/?start=" + updatedStart + "&max=" + updatedMax,
+		url:"api/?start=" + updatedStart + "&max=" + updatedMax,
 		dataType:'json',
 		accepts: 'appication/json'
 	}).done(function(data, textStatus, jqXHR){
 		//Update the statistics
-		console.log("the ajax call in refreshGuestData is working.")
 		$('#totalGuestComing .value').html(data.statistics.totalGuestComing);
 
 		// Get all the guest container
@@ -114,7 +112,7 @@ var refreshGuestData = function(){
 			guestProfileContainer.html(html);
 
 			//update wording of the link
-			var $formLink = $(elem).find('.showFormLink');
+			var $formLink = $(elem).find(".showFormLink");
 
 			if(oneGuest.invitationStatus === null){
 				$formLink.html('RSVP');
@@ -165,8 +163,8 @@ var showGuestListContent = function(){
 	var jQueryStatisticsContainer = $('#statistics');
 	var jQueryGuestListContainer = $('#guestlist');
 
-	jQuery.ajax({
-		url: '../api/?start=' + start + '&max=' + max,
+	$.ajax({
+		url: 'api/?start=' + start + '&max=' + max,
 		dataType: 'json',
 		accepts: 'application/json'
 	}).done(function(data, textStatus, jqXHR){
@@ -214,7 +212,7 @@ var showGuestListContent = function(){
 		ev.preventDefault();
 
 		$.ajax({
-			url: '../api/?start=' + start + '&max=' + max,
+			url: 'api/?start=' + start + '&max=' + max,
 			dataType: 'json',
 			accepts: 'application/json'
 		}).done(function(data, textStatus, jqXHR){
@@ -265,7 +263,7 @@ var showGuestListContent = function(){
 			html += "<div class='rsvpLink'>";
 
 			if(oneGuest.invitationStatus === null){
-				html += "<a class'showFormLink'>RSVP</a>";
+				html += "<a class='showFormLink'>RSVP</a>";
 			} else {
 				html += "<a class='showFormLink'>Update RSVP</a>"
 			}
@@ -278,7 +276,7 @@ var showGuestListContent = function(){
 			//append the active html to display each guest
 			jQueryGuestListContainer.append($html);
 
-			var $showFormLink = $html.find('.showFormLink');
+			var $showFormLink = $html.find(".showFormLink");
 			$showFormLink.data('guest', oneGuest);
 
 			//Attach event handler
@@ -317,19 +315,19 @@ var createGuestInfoHTML = function(oneGuest){
 	};
 
 	if(oneGuest.invitationStatus === null){
-		html += "<p>Not yet responded.</p>";
+		html += "<p class='status'>No response</p>";
 	} else if (oneGuest.invitationStatus == 1){
 
-		var plural = 'people';
+		var plural = 'attendees';
 
 		if(oneGuest.numOfPeopleComing == 1){
-			plural = 'person';
+			plural = 'attendee';
 		}
 
-		html += "<p>Accepted. <br/>" + oneGuest.numOfPeopleComing +
-		" " + plural + " coming.</p>"
+		html += "<p class='status'>Accepted <br/>" + oneGuest.numOfPeopleComing +
+		" " + plural + "</p>"
 	} else {
-		html += "<p>Declined</p>"
+		html += "<p class='status'>Declined</p>"
 	}
 
 	return html;
@@ -349,5 +347,80 @@ $(window).on("hashchange", function(){
 });
 
 $('document').ready(function(){
+	var $loginLink = $('#login');
+	var $overlay = $('#overlay');
+	var $username = $('.loginForm .username');
+	var $password = $('.loginForm .password');
+	var $logoutLink = $('#logout');
+
+
+	$loginLink.on('click', function(ev){
+		if($overlay.is(':visible')){
+			$overlay.hide();
+			showHtmlContent('home.html');
+		} else {
+			$username.val('');
+			$password.val('');
+			$overlay.show();
+		}
+	});
+
+
+	$('#logout').on('click', function(ev){
+		$.ajax({
+			url:'api/logout.php'
+			}).done(function(data,textStatus, jqXHR){
+				$logoutLink.hide();
+				$loginLink.show();
+				showHtmlContent();
+				$username.val('');
+				$password.val('');
+				$overlay.show();
+			});
+	});
+
+	$('.submitLoginInfo').on('click', function(ev){
+		ev.preventDefault();
+		ev.stopPropagation();
+
+		var data = {
+			username: $username.val(),
+			password: $password.val()
+		};
+
+		$.ajax({
+			url:'api/login.php',
+			data:data,
+			type:'post'
+		}).done(function(data, textStatus, jqXHR){
+			//close form
+			$overlay.hide();
+
+			$loginLink.hide();
+			$logoutLink.show();
+
+			if(window.location.hash == '#guestList'){
+				//load guestlist page
+				showGuestListContent();
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			$('.loginForm').append("<div class='feedback'>" + jqXHR.responseText + "</div>");
+		});
+	});
 	$(window).trigger('hashchange');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,48 +1,4 @@
 
-/* LOADING PAGE STYLES */
-
-body::after, body::before{
-	height:50vh;
-	width:100%;
-	position:fixed;
-	left:0
-}
-
-body::before{
-	top:0;
-	transform:translateY(-100%);
-}
-
-body::after{
-	bottom:0;
-	transform:translateY(100%);
-}
-
-body.page-is-changing::after, body.page-is-changing::before{
-	transform:translateY(100%);
-}
-
-.cd-loading-bar{
-	position:fixed;
-	height:2px;
-	width:90%;
-}
-
-.cd-loading-bar::before{
-	position:absolute;
-	left:0;
-	top:0;
-	height:100%;
-	width:100%;
-	transform:scaleX(0);
-	transform-origin:left center;
-}
-
-.page-is-changing .cd-loading-bar::before{
-	transform: scaleX(1);
-}
-
-
 body {
 	background-color:#CECECE;
 	background-image:url('../assets/back-linen.png');
@@ -98,8 +54,12 @@ p{
 
 .navigation ul li{
 	float:left;
-	margin-left:20%;
+	margin-left:15%;
 	margin-top:2%;
+}
+
+#login, #logout{
+	cursor:pointer;
 }
 
 a{
@@ -194,12 +154,62 @@ a:hover{
 }
 
 .guestProfile{
-	line-height:1.3;
+	line-height:1.5;
+	position:relative;
+	width:140px;
+}
+
+.status {
+	position:absolute;
+	top:25px;
+	left:152px;
+	width:90px;
+	font-style:italic;
 }
 
 .guestName {
 	font-weight:bold;
 	color:#fff;
+}
+
+.showFormLink, .rsvpLink {
+	cursor:pointer;
+	color:lightblue;
+	font-weight:bold;
+}
+
+.rsvpLink {
+	position:absolute;
+	left:164px;
+	top:-1px;
+	text-decoration:underline;
+}
+
+.guestInfo{
+	position:relative;
+}
+
+.guestInfo form{
+	margin-top:120px;
+	background-color:rgba(255,188,0,1);
+	padding:10px;
+	color:white;	
+	box-shadow:2px 2px 2px #333;
+	height:160px;
+}
+
+.guestInfo form span {
+	float:left
+}
+
+.guestInfo form input, .guestInfo form select {
+	color:black;
+}
+
+input.submitForm{
+	background-color:#FFF6A3;
+	clear:both;
+	float:left;
 }
 
 /*CONTACT*/
@@ -215,7 +225,50 @@ a:hover{
 	color:#fff;
 }
 
+/*LOGIN OVERLAY*/
 
+#overlay{
+	z-index:10;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	margin-left:0;
+	background:black;
+	text-align:center;
+	padding-top:50px;
+	background-image:url('../assets/linen.png')
+}
+
+#overlay h1{
+	font-size:4em;
+	color:lightblue;
+}
+
+.loginForm{
+	position:relative;
+}
+
+#overlay input[type='submit']{
+	background:pink;
+	color:black;
+}
+
+#overlay div{
+	margin-top:40px;
+	margin-bottom:20px;	
+	color:black;
+}
+
+.feedback{
+	position: fixed;
+    top: -40px;
+    width:100%;
+    background-color:rgba(255,188,0,1);
+    padding: 5px;
+    color:white;
+}
 
 
 

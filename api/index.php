@@ -15,7 +15,7 @@
 		$sql = "UPDATE guestlist " .
 				"SET invitationStatus='" . mysql_real_escape_string( $jsonDecode['invitationStatus']) . "' ," .
 				"numOfPeopleComing='" . mysql_real_escape_string( $jsonDecode['numOfPeopleComing']) . "' " .
-				"WHERE id'{$jsonDecode['id']}'";
+				"WHERE id='{$jsonDecode['id']}'";
 
 		$result = mysql_query($sql);
 	} else if ( $_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -72,7 +72,7 @@
 		$statistics['peopleInvited'] = (int) $row -> total;
 
 		//Get number of guests who are not attending
-		$sql = "SELECT SUM('peopleInvited') AS total FROM guestlist where invitationStatus=0";
+		$sql = "SELECT SUM(peopleInvited) AS total FROM guestlist where invitationStatus=0";
 		$dbresult = mysql_query($sql);
 		$row = mysql_fetch_object($dbresult);
 		$statistics['totalGuestDeclined'] = (int) $row -> total;

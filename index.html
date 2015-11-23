@@ -13,12 +13,32 @@
 	<script src="js/script.js"></script>
 </head>
 <body>
+	<div id="overlay">
+	<span>Invitation for the Wedding of</span>
+	<h1>Robert & Katherine</h1>
+	<form class="loginForm">
+		<div>
+			<input type="text" name='username' placeholder='username' value='' class='username' />
+		</div>
+
+		<div>
+			<input type="password" name='password' placeholder='password' value='' class='password' />
+		</div>
+
+		<input type='submit' class='submitLoginInfo' name='submitLoginInfo' value='Login' />
+
+		<div class="responses"></div>
+	</form>
+	</div>
+
 	<div class="container row">
 		<nav class='u-full-width navigation'>
 			<ul>
 				<li><a href="#home">Home</a></li>
 				<li><a href="#guestlist">Guest List</a></li>
 				<li><a href="#contact">Contact</a></li>
+				<li id='login'><span class='auth'>Login</span></li>
+				<li id='logout'><span class='auth'>Logout</span></li>
 			</ul>
 		</nav>
 	
